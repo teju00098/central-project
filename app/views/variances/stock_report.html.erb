@@ -1,0 +1,95 @@
+<h2>Stock Take Variance Report</h2>
+<div class="media">
+<div class="media-body">
+  <%= form_tag(stock_report_variances_path, :method => "get", class: 'navbar-form navbar-left') do %>
+  <div class="input-group">
+    <%= select_tag :dept, options_for_select(@departements, params[:dept]), prompt: "All departments", class: "form-control" %>
+    <div class="input-group-btn">
+      <%= button_tag " Search", :class => 'btn btn-info glyphicon glyphicon-search',:name => nil%>
+      <%= button_tag " Print", :class => 'btn btn-default glyphicon glyphicon-print',:name => 'print', value: 1%>
+      <%= button_tag " Regenerate", :class => 'btn btn-default glyphicon glyphicon-retweet',:name => 'regenerate', value: 1%>
+      <%= button_tag " Export", :class => 'btn btn-default glyphicon glyphicon-export', :name => 'export', value: 1 %>
+    </div>
+  </div>
+<% end %>
+</div>
+</div>
+<br/>
+<div class="table-wrapper">
+<table class="table table-striped table-hover">
+  <thead>
+    <tr>
+      <th style= "text-align: left;">Report Name</th>
+      <th style= "text-align: left;">Print Date</th>
+      <th style= "text-align: left;">Count Name</th>
+      <th style= "text-align: left;">CNTNAME</th>
+      <th style= "text-align: left;">Store Code</th>
+      <th style= "text-align: left;">Store Name</th>
+      <th style= "text-align: left;">Count Date</th>
+      <th style= "text-align: left;">Dept Code</th>
+      <th style= "text-align: left;">Dept Name</th>
+      <th style= "text-align: left;">Sub Dept Code</th>
+      <th style= "text-align: left;">Sub Dept Name</th>
+      <th style= "text-align: left;">SKU</th>
+      <th style= "text-align: left;">Barcode IBC</th>
+      <th style= "text-align: left;">Barcode SBC</th>
+      <th style= "text-align: left;">Product Name</th>
+      <th style= "text-align: left;">Brand</th>
+      <th style= "text-align: left;">Model</th>
+      <th style= "text-align: left;">Stock</th>
+      <th style= "text-align: left;">Count QTY</th>
+      <th style= "text-align: left;">Variance QTY</th>
+      <th style= "text-align: left;">Variance Percent</th>
+      <th style= "text-align: left;">EXTPHY Retail</th>
+      <th style= "text-align: left;">EXTPHY CNT COST</th>
+      <th style= "text-align: left;">EXTPHY Retail Var</th>
+      <th style= "text-align: left;">EXTPHY Cost Var</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% mb = MasterBusiness.first %>
+    <% @records.each do |r| %>
+      <% dp = r.document_product %>
+      <% master = r.master %>
+      <% ud = r.uploaded_document %>
+      <tr>
+        <td style= "text-align: left;"><%= "Stock Take Variance Report" %></td>
+        <td style= "text-align: left;"><%= r.created_at %></td>
+        <td style= "text-align: left;"><%= dp.StockTakeID %></td>
+        <td style= "text-align: left;"><%= "Full Stock Count #{r.created_at} #{mb.business_unit}" %></td>
+        <td style= "text-align: left;"><%= master.StoreCode %></td>
+        <td style= "text-align: left;"><%= master.StoreName %></td>
+        <td style= "text-align: left;"><%= ud.created_at %></td>
+        <td style= "text-align: left;"><%= master.DeptCode %></td>
+        <td style= "text-align: left;"><%= master.DeptName %></td>
+        <td style= "text-align: left;"><%= master.SubDeptCode %></td>
+        <td style= "text-align: left;"><%= master.SubDeptName %></td>
+        <td style= "text-align: left;"><%= dp.SKU %></td>
+        <td style= "text-align: left;"><%= dp.IBC %></td>
+        <td style= "text-align: left;"><%= dp.SBC %></td>
+        <td style= "text-align: left;"><%= dp.ProductName %></td>
+        <td style= "text-align: left;"><%= master.Brand %></td>
+        <td style= "text-align: left;"><%= master.Model %></td>
+        <td style= "text-align: left;"><%= master.Stock %></td>
+        <td style= "text-align: left;"><%= r.CountQTY %></td>
+        <td style= "text-align: left;"><%= number_with_delimiter(r.VarianceQTY.round(3)) %></td>
+        <td style= "text-align: left;"><%= number_with_delimiter(r.VariancePercent.round(3)) %></td>
+        <td style= "text-align: left;"><%= number_with_delimiter(r.EXTPHY_RETAIL.round(3)) %></td>
+        <td style= "text-align: left;"><%= number_with_delimiter(r.EXTPHY_COST.round(3)) %></td>
+        <td style= "text-align: left;"><%= number_with_delimiter(r.EXTPHY_RETAILVAR.round(3)) %></td>
+        <td style= "text-align: left;"><%= number_with_delimiter(r.EXTPHY_COSTVAR.round(3)) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+</div>
+
+
+<br>
+
+<%= will_paginate @records, renderer: BootstrapPagination::Rails  %>
+
+
+
+

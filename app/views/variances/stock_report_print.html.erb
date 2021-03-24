@@ -1,0 +1,279 @@
+<style>
+
+  *,
+  *:before,
+  *:after,
+  *:first-letter,
+  p:first-line,
+  div:first-line,
+  blockquote:first-line,
+  li:first-line {
+    background: transparent !important;
+    color: #000 !important; /* Black prints faster:
+                   http://www.sanbeiji.com/archives/953 */
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  a,
+  a:visited { text-decoration: underline; }
+
+  a[href]:after { content: " (" attr(href) ")"; }
+
+  abbr[title]:after { content: " (" attr(title) ")"; }
+
+  /*
+   * Don't show links that are fragment identifiers,
+   * or use the `javascript:` pseudo protocol
+   */
+
+  a[href^="#"]:after,
+  a[href^="javascript:"]:after { content: ""; }
+
+  pre { white-space: pre-wrap !important; }
+
+  pre,
+  blockquote {
+    border: 1px solid #999;
+    page-break-inside: avoid;
+  }
+
+  /*
+   * Printing Tables:
+   * http://css-discuss.incutio.com/wiki/Printing_Tables
+   */
+
+  thead { display: table-header-group; }
+  th { padding: 4px; text-align: left; font-size: 10px; }
+  table {width:100%;border-spacing:0}
+  td { padding: 4px; text-align: left; font-size: 10px; }
+  tr:last-child td{border-bottom:1px solid #000;}
+
+  tr,
+  img { page-break-inside: avoid; }
+
+  p,
+  h2,
+  h3 {
+    orphans: 3;
+    widows: 3;
+  }
+
+  h2,
+  h3 { page-break-after: avoid; }
+
+  /**
+   * HIDE certain elements completely
+   */
+  .site-navigation {
+    display: none;
+  }
+
+  /**
+   * Or go Nuclear and use this:
+   * from: https://medium.com/@matuzo/i-totally-forgot-about-print-style-sheets-f1e6604cfd6#.9de6r4yhr
+   *
+   *   body > *:not(main) { display: none; }
+   *
+   */
+
+   .left_header {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    font-size: 10px;
+   }
+
+   .custom_table {
+     position: relative;
+     margin-top: 10px;
+   }
+
+   .thrdbox {
+    text-align: right;
+    width: 100%;
+    position: absolute;
+    top: 10px;
+    font-size: 10px;
+    right: 10px;
+  }
+
+  .fourthbox {
+    text-align: right;
+    width: 100%;
+    position: absolute;
+    top: 60px;
+    font-size: 10px;
+    right: 10px;
+  }
+
+  .try {
+    margin-block-start: 10px;
+    margin-block-end: 10px;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+  }
+
+ .space {
+  padding-bottom: 0px;
+  padding-top: 0px;
+}
+  
+.quantity {
+  text-align: right;
+}
+
+.line {
+  text-align: center;
+  }
+
+ .lining {
+  border-top: 1px solid #000;
+  border-bottom: 1px solid #000;
+ }
+</style>
+
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <%= favicon_link_tag 'favicon.ico' %>
+  </head>
+
+  <body style="margin-top: 0px;
+  margin-right: 0px;
+  margin-bottom: 0px;
+  margin-left: 0px;">
+
+<table class="table table-striped table-hover">
+  <thead>
+  <tr>
+    <th colspan="4"><%= image_tag display_barcode(@records.first.master.CountName) %></th>
+    <th></th>
+    <th></th>
+    <th colspan="3" style="text-align:center; font-size: 15px;">Stock Take Variance Report</th>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th style="text-align: right" colspan="4"><%= Time.now.strftime('%d/%m/%Y %H:%M:%S') %></th>
+  </tr>
+  <tr>
+    <th colspan="3">CountName: <%= @records.first.master.CountName %></th>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th colspan="3" style="text-align:center; font-size: 13px;">CRC Pooled Stocktake</th>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th style="text-align: right" colspan="4"><%= params[:dept].present? ? params[:dept] : "All departments" %></th>
+  </tr>
+  <tr>
+    <th colspan="3">Store Code: <%= @records.first.master.StoreCode %></th>
+    <th></th>
+    <th></th> 
+    <th></th>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+  <tr>
+    <th colspan="5">Store Name: <%= @records.first.master.StoreName %></th>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+    <tr>
+<!--      <th>Print Date</th>-->
+<!--      <th>Count Name</th>-->
+<!--      <th>CNTNAME</th>-->
+<!--      <th>Store Code</th>-->
+<!--      <th>Store Name</th>-->
+<!--      <th>Count Date</th>-->
+      <th class="lining">Dept Code</th>
+      <th class="lining">Dept Name</th>
+      <th class="lining">Sub Dept Code</th>
+      <th class="lining">Sub Dept Name</th>
+      <th class="lining">SKU</th>
+      <th class="lining">Barcode IBC</th>
+      <th class="lining">Barcode SBC</th>
+      <th class="lining">Product Name</th>
+      <th class="lining">Brand</th>
+      <th class="lining">Model</th>
+      <th class="lining">Stock</th>
+      <th class="lining">Count QTY</th>
+      <th class="lining">Variance QTY</th>
+      <th class="lining">Variance Percent</th>
+      <th class="lining">EXTPHY Retail</th>
+      <th class="lining">EXTPHY CNT COST</th>
+      <th class="lining">EXTPHY Retail Var</th>
+      <th class="lining">EXTPHY Cost Var</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @records.find_in_batches do |bulk| %>
+      <% bulk.each do |r| %>
+      <% dp = r.document_product %>
+      <% master = r.master %>
+      <% ud = r.uploaded_document %>
+      <tr>
+<!--        <td><%#= r.created_at %></td>-->
+<!--        <td><%#= dp.StockTakeID %></td>-->
+<!--        <td><%#= "Full Stock Count #{r.created_at} #{mb.business_unit}" %></td>-->
+<!--        <td><%#= master.StoreCode %></td>-->
+<!--        <td><%#= master.StoreName %></td>-->
+<!--        <td><%#= ud.created_at %></td>-->
+        <td class="space"><%= master.DeptCode %></td>
+        <td class="space"><%= master.DeptName %></td>
+        <td class="space"><%= master.SubDeptCode %></td>
+        <td class="space"><%= master.SubDeptName %></td>
+        <td class="space"><%= dp.SKU %></td>
+        <td class="space"><%= dp.IBC %></td>
+        <td class="space"><%= dp.SBC %></td>
+        <td class="space"><%= dp.ProductName %></td>
+        <td class="space"><%= master.Brand %></td>
+        <td class="space"><%= master.Model %></td>
+        <td class="space"><%= master.Stock %></td>
+        <td class="space"><%= r.CountQTY %></td>
+        <td class="space"><%= r.VarianceQTY %></td>
+        <td class="space"><%= number_with_delimiter(r.VariancePercent.round(3)) %></td>
+        <td class="space"><%= number_with_delimiter(r.EXTPHY_RETAIL.round(3)) %></td>
+        <td class="space"><%= number_with_delimiter(r.EXTPHY_COST.round(3)) %></td>
+        <td class="space"><%= number_with_delimiter(r.EXTPHY_RETAILVAR.round(3)) %></td>
+        <td class="space"><%= number_with_delimiter(r.EXTPHY_COSTVAR.round(3)) %></td>
+      </tr>
+    <% end %>
+    <% end %>
+  </tbody>
+</table>
+</body>
+</html>
+
+<script>
+  window.print();
+</script>
+

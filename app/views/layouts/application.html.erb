@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>PST</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= favicon_link_tag 'favicon.ico' %>
+
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+
+
+  <body>
+
+  <nav class="navbar navbar-expand-lg navbar-light bg-info">
+
+  <div class="conatiner">
+    <ul class="nav nav-tabs">
+  <% if current_user %>
+            <li><%= link_to 'Master data', masters_path %> </li>
+            <li><%= link_to 'PDAMaster data', pdamasters_path %> </li>
+            <li><%= link_to 'Location data', locations_path %> </li>
+            <li><%= link_to 'Variance data', variances_path %> </li>
+            <li><%= link_to 'Variance report', variances_masters_path %> </li>
+            <li><%= link_to 'StockTake Variance report', stock_report_variances_path %> </li>
+            <li><%= link_to 'No Count report', no_counts_masters_path %> </li>
+            <li><%= link_to 'Zero Count report', zero_counts_masters_path %> </li>
+            <li><%= link_to 'Performance Report', performance_report_masters_path %> </li>
+            <li><%= link_to 'Summary Report', summary_report_masters_path %> </li>
+            <li><%= link_to 'Upload data', upload_histories_document_products_path %> </li>
+            <li><%= link_to 'Admin dashboard', admin_root_path, class: "btn btn-info btn-small navbar-btn", style:"margin-right: 5px;" %> </li> 
+            <li><%= link_to 'Sign out', destroy_user_session_path, method: :delete, class: "btn btn-danger btn-small navbar-btn", style:"margin-right: 5px;" %> </li>
+        <% else %>
+            <li><%= link_to 'Sign up', new_user_registration_path, class: "btn btn-warning btn-small navbar-btn", style:"margin-right: 5px;" %> </li>
+            <li><%= link_to 'Sign in', new_user_session_path, class: "btn btn-success btn-small navbar-btn" %> </li>
+        <% end %>
+      </ul>  
+      </div>
+      </nav>
+
+
+    <% if flash[:notice] %>
+      <div class="alert alert-success">
+         <button type="button" class="close" data-dismiss="alert">&times;</button>
+         <%= flash[:notice] %>
+      </div>
+    <% elsif flash[:error] %>
+      <div class="alert alert-error">
+         <button type="button" class="close" data-dismiss="alert">&times;></button>
+         <%= flash[:error] %>
+      </div>
+    <% elsif flash[:alert] %>
+       <div class="alert">
+         <button type="button" class="close" data-dismiss="alert">&times;</button>
+         <%= flash[:alert] %>
+       </div>
+    <% end %>   
+       
+    <%= yield %>
+    </div>
+  </body>
+</html>

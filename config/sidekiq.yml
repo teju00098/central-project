@@ -1,0 +1,7 @@
+---
+:verbose: true
+:pidfile: tmp/pids/sidekiq.pid
+:concurrency: 10
+:max_retries: 0
+:queues:
+  - [default, 5]

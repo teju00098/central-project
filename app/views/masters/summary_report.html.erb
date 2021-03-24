@@ -1,0 +1,80 @@
+<h2>Summary Report</h2>
+<div class="media">
+  <div class="media-body">
+    <%= form_tag(summary_report_masters_path, :method => "get", class: 'navbar-form navbar-left') do %>
+      <div class="input-group">
+        <div class="input-group-btn">
+          <%= button_tag " Print", :class => 'btn btn-default glyphicon glyphicon-print',:name => 'print', value: 1%>
+          <%= button_tag " Regenerate", :class => 'btn btn-default glyphicon glyphicon-retweet',:name => 'regenerate', value: 1%>
+          <%= button_tag " Export", :class => 'btn btn-default glyphicon glyphicon-export', :name => 'export', value: 1 %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+<br/>
+<div class="table-wrapper">
+  <table class="table table-striped table-hover">
+  <thead>
+  <tr>
+    <th></th>
+    <th colspan="4" style="text-align: center">SKU</th>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th colspan="2" style="text-align: center">physical Count Value</th>
+    <th colspan="2" style="text-align: center">Gain Value</th>
+    <th colspan="2" style="text-align: center">Loss Value</th>
+    <th colspan="2" style="text-align: center">Gain-Loss Value</th>
+  </tr>
+  <tr>
+    <th>credit</th>
+    <th>COUNT</th>
+    <th>NoDiff</th>
+    <th>DiffGain</th>
+    <th>DiffLoss</th>
+    <th>SOH</th>
+    <th>Physical</th>
+    <th>Over</th>
+    <th>Short</th>
+    <th>Variance</th>
+    <th>Retail</th>
+    <th>Cost </th>
+    <th>Retail </th>
+    <th> Cost </th>
+    <th>Retail </th>
+    <th>Cost </th>
+    <th> Retail </th>
+    <th>Cost </th>
+  </tr>
+  </thead>
+    <tbody>
+      <% @summary_reports.each do |r| %>
+        <tr>
+          <td style="text-align: left"><%= number_with_delimiter(r.credit) %></td>
+          <td style="text-align: left"><%= number_with_delimiter(r.skucount.to_f) %></td>
+          <td style="text-align: left"><%= number_with_delimiter(r.sku_no_diff.to_f) %></td>
+          <td style="text-align: left"><%= number_with_delimiter(r.sku_diff_gain.to_f) %></td>
+          <td style="text-align: left"><%= number_with_delimiter(r.sku_diff_loss.to_f) %></td>
+          <td style="text-align: left"><%= number_with_delimiter(r.quantity_soh.to_f) %></td>
+          <td style="text-align: left"><%= number_with_delimiter(r.quantity_physical.to_f) %></td>
+          <td style="text-align: left"><%= number_with_delimiter(r.quantity_over.to_f) %></td>
+          <td style="text-align: left"><%= number_with_delimiter(r.quantity_short.to_f) %></td>
+          <td style="text-align: left"><%= number_with_delimiter(r.quantity_variance.to_f) %></td>
+          <td style="text-align: left"><%= number_with_precision( r.physical_count_retail_value, precision: 2, separator: '.', delimiter: ',').to_f %></td>
+          <td style="text-align: left"><%= number_with_precision( r.physical_count_cost_value, precision: 2, separator: '.', delimiter: ',').to_f %></td>
+          <td style="text-align: left"><%= number_with_delimiter(r.gain_retail_value.to_f) %></td>
+          <td style="text-align: left"><%= number_with_delimiter(r.gain_cost_value.to_f) %></td>
+          <td style="text-align: left"><%= number_with_delimiter(r.loss_retail_value.to_f) %></td>
+          <td style="text-align: left"><%= number_with_delimiter(r.loss_cost_value.to_f) %></td>
+          <td style="text-align: left"><%= number_with_delimiter(r.gain_loss_value_retail_value.to_f) %></td>
+          <td style="text-align: left"><%= number_with_precision( r.gain_loss_value_cost_value, precision: 2, separator: '.', delimiter: ',').to_f %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+<br>
+<%= will_paginate @summary_reports, renderer: BootstrapPagination::Rails  %>

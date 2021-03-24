@@ -1,0 +1,54 @@
+
+<h2>Import Location Data </h2>
+<div class="media">
+<div class="media-body">
+<%= form_tag import_locations_path, multipart: true do %>
+  <span class="btn btn-large btn-warning btn-file">
+  <%= file_field_tag :file %>
+  </span>
+  <%= submit_tag "Upload location data", class: 'btn btn-mini btn-success' %>
+<% end %> </br>
+
+<%= link_to "CLEAR LOCATION DATA", cleardata_locations_path, :method => :delete, class: 'btn btn-mini btn-danger' %> |
+<%= link_to 'ADD NEW RECORD', new_location_path, class: 'btn btn-mini btn-success' %> <br /><br />
+</div>  
+</div>  
+<h1>Location data</h1>
+
+<div class="table-wrapper">
+<table class="table table-striped table-hover">
+  <thead>
+    <tr>
+      <th>Location</th>
+      <th>Zone</th>
+      <th>Name</th>
+      <th>Dept</th>
+      <th>SubDept</th>
+      <th>Type</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @locations.each do |location| %>
+      <tr>
+        <td><%= location.location %></td>
+        <td><%= location.zone %></td>
+        <td><%= location.name %></td>
+        <td><%= location.dept %></td>
+        <td><%= location.subdept %></td>
+        <td><%= location.kind %></td>
+        <td><%= link_to 'Show', location, class: 'btn btn-mini btn-info' %></td>
+        <td><%= link_to 'Edit', edit_location_path(location), class: 'btn btn-mini btn-success' %></td>
+        <td><%= link_to 'Delete', location, method: :delete, class: 'btn btn-mini btn-danger', data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+</div>
+<br>
+
+<%= will_paginate @locations, renderer: BootstrapPagination::Rails  %>
+
+
+

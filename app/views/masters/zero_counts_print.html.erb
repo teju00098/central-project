@@ -1,0 +1,281 @@
+<style>
+
+  *,
+  *:before,
+  *:after,
+  *:first-letter,
+  p:first-line,
+  div:first-line,
+  blockquote:first-line,
+  li:first-line {
+    background: transparent !important;
+    color: #000 !important; /* Black prints faster:
+                   http://www.sanbeiji.com/archives/953 */
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  a,
+  a:visited { text-decoration: underline; }
+
+  a[href]:after { content: " (" attr(href) ")"; }
+
+  abbr[title]:after { content: " (" attr(title) ")"; }
+
+  /*
+   * Don't show links that are fragment identifiers,
+   * or use the `javascript:` pseudo protocol
+   */
+
+  a[href^="#"]:after,
+  a[href^="javascript:"]:after { content: ""; }
+
+  pre { white-space: pre-wrap !important; }
+
+  pre,
+  blockquote {
+    border: 1px solid #999;
+    page-break-inside: avoid;
+  }
+
+  /*
+   * Printing Tables:
+   * http://css-discuss.incutio.com/wiki/Printing_Tables
+   */
+
+  thead { display: table-header-group; }
+  th { padding: 4px; text-align: left; font-size: 10px; }
+  table {width:100%;border-spacing:0}
+  td { padding: 2px; text-align: left; font-size: 10px; }
+  tr:last-child td{border-bottom:1px solid #000;}
+
+  tr,
+  img { page-break-inside: avoid; }
+
+  p,
+  h2,
+  h3 {
+    orphans: 3;
+    widows: 3;
+  }
+
+  h2,
+  h3 { page-break-after: avoid; }
+
+  /**
+   * HIDE certain elements completely
+   */
+  .site-navigation {
+    display: none;
+  }
+
+  /**
+   * Or go Nuclear and use this:
+   * from: https://medium.com/@matuzo/i-totally-forgot-about-print-style-sheets-f1e6604cfd6#.9de6r4yhr
+   *
+   *   body > *:not(main) { display: none; }
+   *
+   */
+
+   .left_header {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    font-size: 10px;
+   }
+
+   .custom_table {
+     position: relative;
+     margin-top: 10px;
+   }
+
+   .thrdbox {
+    text-align: right;
+    width: 100%;
+    position: absolute;
+    top: 10px;
+    font-size: 10px;
+    right: 10px;
+  }
+
+  .fourthbox {
+    text-align: right;
+    width: 100%;
+    position: absolute;
+    top: 60px;
+    font-size: 10px;
+    right: 10px;
+  }
+
+  .try {
+    margin-block-start: 10px;
+    margin-block-end: 10px;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+  }
+
+ .space {
+  padding-bottom: 0px;
+  padding-top: 0px;
+}
+
+.quantity {
+  text-align: right;
+}
+
+.line {
+  text-align: center;
+  }
+
+  .design {
+    padding-top: 0px;
+    padding-right: 0px;
+    padding-left: 0px;
+    padding-bottom: 0px;
+  }
+
+ .lining {
+  border-top: 1px solid #000;
+  border-bottom: 1px solid #000;
+ }
+
+
+</style>
+
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <%= favicon_link_tag 'favicon.ico' %>
+  </head>
+
+  <body style="margin-top: 0px;
+  margin-right: 0px;
+  margin-bottom: 0px;
+  margin-left: 0px;">
+
+<table class="table table-striped table-hover">
+<thead>
+<tr>
+<th colspan="3"><%= image_tag display_barcode(Master.first.CountName) %></th>
+<th></th>
+<th style="text-align:center; font-size: 15px;" colspan="3">Zero Count Report</th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th style="text-align:right;" colspan="3"><%= Time.now.strftime('%d/%m/%Y %H:%M:%S') %></th>
+</tr>
+<tr>
+<th colspan="2">ใบนับเลขที่: <%= Master.first.CountName %></th>
+<th></th>
+<th></th>
+<th style="text-align:center; font-size: 13px;" colspan="3">CRC Pooled Stocktake</th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th colspan="3" style="text-align: right;"><%= params[:dept].present? ? params[:dept] : "All departments" %></th>
+</tr>
+<tr>
+<th colspan="2">StoreCode: <%= Master.first.StoreCode %></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+<tr>
+<th colspan="3">StoreName: <%= Master.first.StoreName %></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+
+<tr>
+    <th class="lining">Department</th>
+    <th class="lining">SubDepartment</th>
+    <th class="lining">Location</th>
+    <th class="lining">SKU</th>
+    <th class="lining">IBC</th>
+    <th class="lining">SBC</th>
+    <th class="lining">ชื่อสินค้า<br></th>
+    <th class="lining">ยี่ห้อ<br></th>
+    <th class="lining">รุ่น<br></th>
+    <th class="lining">CountQTY<br></th>
+    <th class="lining">Variance</th>
+    <th class="lining" style="border-left:1px solid #000">Location1</th>
+    <th class="lining" style="border-left:1px solid #000">Location2</th>
+    <th class="lining" style="border-left:1px solid #000">Location3</th>
+  </tr>
+</thead>
+
+
+<tbody>
+
+<% @zero_counts.find_in_batches do |bulk| %>
+  <% bulk.each do |r| %>
+
+<tr>
+    <td class=“space”><%= r.master.DeptName %></td>
+    <td class=“space”><%= r.master.SubDeptName %></td>
+    <td class=“space”><%= r.Location %></td>
+    <td class=“space”><%= r.SKU %></td>
+    <td class=“space”><%= r.IBC %></td>
+    <td class=“space”><%= r.SBC %></td>
+    <td class=“space”><%= r.master.ProductName %></td>
+    <td class=“space”><%= r.master.Brand %></td>
+    <td class=“space”><%= r.master.Model %></td>
+    <td class=“space”>0</td>
+    <td class=“space”><%= number_with_delimiter((0-r.Stock.to_f * r.Cost.to_f).round(2).to_s.sub(/\.?0+$/, '')) %></td>
+    <td class=“space”></td>
+    <td class=“space”></td>
+    <td class=“space”></td>
+  </tr>
+
+
+<tr>
+    <td class=“space”></td>
+    <td class=“space”></td>
+    <td class=“space design” colspan="2"><%= image_tag display_barcode(r.Location) %></td>
+    <td class=“space design” colspan="2"><%= image_tag display_barcode(r.SKU) %></td>
+    <td class=“space”></td>
+    <td class=“space”></td>
+    <td class=“space”></td>
+    <td class=“space”></td>
+    <td class=“space”></td>
+    <td class="space">..................</td>
+    <td class="space">..................</td>
+    <td class="space">..................</td>
+    <td class=“space”></td>
+    <td class=“space”></td>
+  </tr>
+
+<% end %>
+<% end %>
+</tbody>
+
+</table>
+</body>
+</html>
+
+<script>
+  window.print();
+</script>
+
+

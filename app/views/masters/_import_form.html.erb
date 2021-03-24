@@ -1,0 +1,21 @@
+<div class="card" style="margin:10px;border: 1px solid;padding:10px;width:50%">
+ <div class="card-header bg-success"><h4 style="padding:10px">Setup Page</h4></div>
+   <div class="card-body">
+
+    <%= form_tag(import_masters_path, method: :post, multipart: true) do  %>
+      <div class="form-group row">
+        <div class="col-sm-2 col-form-label">Business Name</div><br />
+        <div class="col-sm-10"><%= text_field_tag :name, master_business&.business_name, class: "form-control", required: true%></div>
+      </div>
+
+      <div class="form-group row">
+        <div class="col-sm-2 col-form-label">Business Unit</div><br />
+        <div class="col-sm-10"><%= text_field_tag :unit, master_business&.business_unit, class: "form-control", required: true%></div>
+      </div>
+
+      <div class="actions">
+        <%= file_field_tag :file, style: 'display:inline-block', required: true %> <%= submit_tag "Import Data" , class: "btn btn-success", style: 'display:inline-block' %> <br />
+      </div>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,257 @@
+<style>
+body{-webkit-print-color-adjust:exact !important;
+}
+  *,
+  *:before,
+  *:after,
+  *:first-letter,
+  p:first-line,
+  div:first-line,
+  blockquote:first-line,
+  li:first-line {
+    background: transparent !important;
+    color: #000 !important; /* Black prints faster:
+                   http://www.sanbeiji.com/archives/953 */
+    box-shadow: none !important;
+    text-shadow: none !important;
+    font-family: "Arial", sans-serif;
+    margin-top: 0px;
+  }
+
+  a,
+  a:visited { text-decoration: underline; }
+
+  a[href]:after { content: " (" attr(href) ")"; }
+
+  abbr[title]:after { content: " (" attr(title) ")"; }
+  table, th, td, tr {
+    border-collapse: collapse;
+  }
+
+  /*
+   * Don't show links that are fragment identifiers,
+   * or use the `javascript:` pseudo protocol
+   */
+
+  a[href^="#"]:after,
+  a[href^="javascript:"]:after { content: ""; }
+
+  pre { white-space: pre-wrap !important; }
+
+  pre,
+  blockquote {
+    border: 1px solid #999;
+    page-break-inside: avoid;
+  }
+
+  /*
+   * Printing Tables:
+   * http://css-discuss.incutio.com/wiki/Printing_Tables
+   */
+
+  thead { display: table-header-group; }
+  th {padding: 4px; text-align: center; font-size: 10px; }
+  table {width:100%;border-spacing:0}
+  td { padding: 4px; text-align: center; font-size: 10px; }
+
+  tr,
+  img { page-break-inside: avoid; }
+
+  p,
+  h2,
+  h3 {
+    orphans: 3;
+    widows: 3;
+  }
+
+  h2,
+  h3 { page-break-after: avoid; }
+
+  /**
+   * HIDE certain elements completely
+   */
+  .site-navigation {
+    display: none;
+  }
+
+  /**
+   * Or go Nuclear and use this:
+   * from: https://medium.com/@matuzo/i-totally-forgot-about-print-style-sheets-f1e6604cfd6#.9de6r4yhr
+   *
+   *   body > *:not(main) { display: none; }
+   *
+   */
+
+   .left_header {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    font-size: 10px;
+   }
+
+   .custom_table {
+     position: relative;
+     margin-top: 10px;
+   }
+
+   .thrdbox {
+    text-align: right;
+    width: 100%;
+    position: absolute;
+    top: 10px;
+    font-size: 10px;
+    right: 10px;
+  }
+
+  .fourthbox {
+    text-align: right;
+    width: 100%;
+    position: absolute;
+    top: 60px;
+    font-size: 10px;
+    right: 10px;
+  }
+
+  .try {
+    margin-block-start: 10px;
+    margin-block-end: 10px;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+  }
+
+ .space {
+  padding-bottom: 0px;
+  padding-top: 0px;
+}
+  
+.quantity {
+  text-align: right;
+}
+
+.line {
+  text-align: center;
+  }
+
+.lining {
+  border: 1px solid;
+}
+</style>
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <%= favicon_link_tag 'favicon.ico' %>
+  </head>
+
+  <body style="margin-top: 0px;
+  margin-right: 0px;
+  margin-bottom: 0px;
+  margin-left: 0px;">
+
+
+<table>
+<tr>
+ <th colspan="2" style="text-align:left"><%= image_tag display_barcode(Master.first.CountName) %></th>
+ <th></th>
+ <th></th>
+ <th style="font-size:15px; text-align:center;">Performance Report</th>
+ <th></th>
+ <th></th>
+ <th></th>
+ <th style="text-align:right;"><%= Time.now.strftime('%d/%m/%Y %H:%M:%S') %></th>
+ </tr>
+ <tr>
+ <th colspan="2" style="text-align:left">ใบนับเลขที่: <%= Master.first.CountName %></th>
+ <th></th>
+ <th></th>
+ <th style="font-size:13px; text-align:center;">CRC Pooled Stocktake</th>
+ <th></th>
+ <th></th>
+ <th></th>
+ <th></th>
+ </tr>
+ <tr>
+ <th style="text-align:left">StoreName: <%= Master.first.StoreName %></th>
+ <th></th>
+ <th></th>
+ <th></th>
+ <th></th>
+ <th></th>
+ <th></th>
+ <th></th>
+ <th></th>
+ </tr>
+
+  <tr>
+    <th class="lining" style="background-color: lightgrey !important;">Manday</th>
+    <td class="lining"><%= @total_inspectors %></td>
+    <th class="lining" style="background-color: lightgrey !important;">Avg/QTY</th>
+    <td class="lining"><%= number_with_delimiter(@total_qty / @total_inspectors)  %></td>
+  </tr>
+  <tr>
+    <th class="lining" style="background-color: lightgrey !important;">QTY</th>
+    <td class="lining"><%= number_with_delimiter(@total_qty) %></td>
+    <th class="lining" style="background-color: lightgrey !important;">Value</th>
+    <td class="lining"><%= number_with_delimiter(@total_value) %></td>
+    <th class="lining" style="background-color: lightgrey !important;">Date</th>
+    <td class="lining"><%= Time.now.strftime('%d-%b-%Y') %></td>
+    <th class="lining" style="background-color: lightgrey !important;">Time</th>
+    <td class="lining"><%= @earliest_time %>&nbsp;&nbsp;<%= @latest_time %></td>
+  </td>
+  <tr style="border-bottom: none !important">
+    <th class="lining" style="background-color: lightgrey !important;">Count Name</th>
+    <td class="lining" style="border-bottom: none !important"><%= @master.CountName %></td>
+    <th class="lining" style="background-color: lightgrey !important;">Store Code</th>
+    <td class="lining" style="border-bottom: none !important"><%= @master.StoreCode %></td>
+    <th class="lining" style="background-color: lightgrey !important;">BU</th>
+    <td class="lining" style="border-bottom: none !important"><%= @master_business&.business_unit || "N/A" %></td>
+    <th class="lining" style="background-color: lightgrey !important;">Store Name</th>
+    <td class="lining" style="border-bottom: none !important"><%= @master.StoreName %></td>
+  </tr>
+  <tr style="background-color: lightgrey !important" >
+    <th class="lining">PDA MAC/NO</th>
+    <th class="lining">Inspector</th>
+    <th class="lining">Start</th>
+    <th class="lining">Finish</th>
+    <th class="lining">Total</th>
+    <th class="lining">Location</th>
+    <th class="lining">SKU</th>
+    <th class="lining">QTY</th>
+    <th style="border-right: 1px solid #000;" class="lining">Value</th>
+  </tr>
+  <% @performance_reports.find_in_batches do |bulk| %>
+    <% bulk.each do |r| %>
+      <tr>
+        <td class="lining"><%= r.pda_mac_no %></td>
+        <td class="lining"><%= r.inspector %></td>
+        <td class="lining"><%= r.start %></td>
+        <td class="lining"><%= r.finish %></td>
+        <td class="lining"><%= r.total %></td>
+        <td class="lining"><%= r.location %></td>
+        <td class="lining"><%= r.sku %></td>
+        <td class="lining"><%= number_with_delimiter(r.total_qty.to_f.round(2)) %></td>
+        <td class="lining"><%= number_with_delimiter(r.value.to_f.round(2)) %></td>
+      </tr>
+    <% end %>
+  <% end %>
+  <tr>
+  </tr>
+  <tr>
+    <th class="lining" style="background-color: lightgrey !important"><b>Total</b></th>
+    <td class="lining" style="background-color: lightgrey !important"><%= @total_inspectors %></td>
+    <td class="lining" style="border: none !important;"></td>
+    <td class="lining" style="border: none !important;"></td>
+    <td class="lining" style="border: none !important;"></td>
+    <td class="lining" style="border: none !important;"></td>
+    <td class="lining" style="background-color: lightgrey !important"><b><%= number_with_delimiter(@total_sku) %></td>
+    <td class="lining" style="background-color: lightgrey !important"><b><%= number_with_delimiter(@total_qty) %></td>
+    <td class="lining" style="background-color: lightgrey !important"><b><%= number_with_delimiter(@total_value) %></td>
+  </tr>
+</table>
+</body>
+</html>
+
+<script>
+  window.print();
+</script>
+

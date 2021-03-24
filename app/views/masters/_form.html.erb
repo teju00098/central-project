@@ -1,0 +1,153 @@
+<%= form_with(model: master, local: true) do |form| %>
+  <% if master.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(master.errors.count, "error") %> prohibited this master from being saved:</h2>
+
+      <ul>
+        <% master.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group row">
+    <div class="col-sm-2"><h4><%= form.label :CountName, "CountName", class: "col-form-label" %></h4></div><br />
+    <div class="col-sm-10"><h4><%= form.text_field :CountName, class: "form-control" %></h4></div>
+  </div>
+
+  <div class="form-group row">
+    <div class="col-sm-2"><h4><%= form.label :StoreCode, "StoreCode", class: "col-form-label" %></h4></div><br />
+    <div class="col-sm-10"><h4><%= form.text_field :StoreCode, class: "form-control" %></h4></div>
+  </div>
+
+  <div class="form-group row">
+    <div class="col-sm-2"><h4><%= form.label :StoreName, "StoreName", class: "col-form-label" %></h4></div><br />
+    <div class="col-sm-10"><h4><%= form.text_field :StoreName, class: "form-control" %></h4></div>
+  </div>
+
+  <div class="form-group row">
+    <div class="col-sm-2"><h4><%= form.label :VenderCode, "VenderCode", class: "col-form-label" %></h4></div><br />
+    <div class="col-sm-10"><h4><%= form.number_field :VenderCode, class: "form-control" %></h4></div>
+  </div>
+
+  <div class="form-group row">
+    <div class="col-sm-2"><h4><%= form.label :VenderName, "VenderName", class: "col-form-label" %></h4></div><br /> 
+    <div class="col-sm-10"><h4><%= form.text_field :VenderName, class: "form-control" %></h4></div>
+  </div>
+
+  <div class="form-group row">
+    <div class="col-sm-2"><h4><%= form.label :DeptCode, "DeptCode", class: "col-form-label" %></h4></div><br />
+    <div class="col-sm-10"><h4><%= form.number_field :DeptCode, class: "form-control" %></h4></div>
+  </div>
+
+  <div class="form-group row">
+    <div class="col-sm-2"><h4><%= form.label :DeptName, "DeptName", class: "col-form-label" %></h4></div><br />
+    <div class="col-sm-10"><h4><%= form.text_field :DeptName, class: "form-control" %></h4></div>
+  </div>
+
+  <div class="form-group row">
+    <div class="col-sm-2"><h4><%= form.label :SubDeptCode, "SubDeptCode", class: "col-form-label" %></h4></div><br />
+    <div class="col-sm-10"><h4><%= form.number_field :SubDeptCode, class: "form-control" %></h4></div>
+  </div>
+
+  <div class="form-group row">
+    <div class="col-sm-2"><h4><%= form.label :SubDeptName, "SubDeptName", class: "col-form-label" %></h4></div><br />
+    <div class="col-sm-10"><h4><%= form.text_field :SubDeptName, class: "form-control" %></h4></div>
+  </div>
+
+  <div class="form-group row">
+    <div class="col-sm-2"><h4><%= form.label :Class, "Class", class: "col-form-label" %></h4></div><br />
+    <div class="col-sm-10"><h4><%= form.number_field :Class, class: "form-control" %></h4></div>
+  </div>
+
+  <div class="form-group row">
+    <div class="col-sm-2"><h4><%= form.label :ClassName, "ClassName", class: "col-form-label" %></h4></div><br />
+    <div class="col-sm-10"><h4><%= form.text_field :ClassName, class: "form-control" %></h4></div>
+  </div>
+
+  <div class="form-group row">
+    <div class="col-sm-2"><h4><%= form.label :SubClass, "SubClass", class: "col-form-label" %></h4></div><br />
+    <div class="col-sm-10"><h4><%= form.number_field :SubClass, class: "form-control" %></h4></div>
+  </div>
+
+  <div class="form-group row">
+    <div class="col-sm-2"><h4><%= form.label :SubClassName, "SubClassName", class: "col-form-label" %></h4></div><br />
+    <div class="col-sm-10"><h4><%= form.text_field :SubClassName, class: "form-control" %></h4></div>
+  </div>
+
+  <div class="form-group row">
+    <div class="col-sm-2"><h4><%= form.label :SKUType, "SKUType", class: "col-form-label" %></h4></div><br />
+    <div class="col-sm-10"><h4><%= form.text_field :SKUType, class: "form-control" %></h4></div>
+  </div>
+
+  <div class="form-group row">
+    <div class="col-sm-2"><h4><%= form.label :SpecialAttribute, "SpecialAttribute", class: "col-form-label" %></h4></div><br />
+    <div class="col-sm-10"><h4><%= form.text_field :SpecialAttribute, class: "form-control" %></h4></div>
+  </div>
+
+  <div class="form-group row">
+    <div class="col-sm-2"><h4><%= form.label :SKU, "SKU", class: "col-form-label" %></h4></div><br />
+    <div class="col-sm-10"><h4><%= form.text_field :SKU, class: "form-control" %></h4></div>
+  </div>
+
+  <div class="form-group row">
+    <div class="col-sm-2"><h4><%= form.label :BarcodeIBC, "BarcodeIBC", class: "col-form-label" %></h4></div><br />
+    <div class="col-sm-10"><h4><%= form.text_field :BarcodeIBC, class: "form-control" %></h4></div>
+  </div>
+
+  <div class="form-group row">
+    <div class="col-sm-2"><h4><%= form.label :BarcodeSBC, "BarcodeSBC", class: "col-form-label" %></h4></div><br />
+    <div class="col-sm-10"><h4><%= form.text_field :BarcodeSBC, class: "form-control" %></h4></div>
+  </div>
+
+  <div class="form-group row">
+    <div class="col-sm-2"><h4><%= form.label :ProductName, "ProductName", class: "col-form-label" %></h4></div><br />
+    <div class="col-sm-10"><h4><%= form.text_field :ProductName, class: "form-control" %></h4></div>
+  </div>
+
+  <div class="form-group row">
+    <div class="col-sm-2"><h4><%= form.label :Brand, "Brand", class: "col-form-label" %></h4></div><br />
+    <div class="col-sm-10"><h4><%= form.text_field :Brand, class: "form-control" %></h4></div>
+  </div>
+
+  <div class="form-group row">
+    <div class="col-sm-2"><h4><%= form.label :Model, "Model", class: "col-form-label" %></h4></div><br />
+    <div class="col-sm-10"><h4><%= form.text_field :Model, class: "form-control" %></h4></div>
+  </div>
+
+  <div class="form-group row">
+  <div class="col-sm-2"><h4><%= form.label :UnitOfMeasure, "UnitOfMeasure", class: "col-form-label" %></h4></div><br />
+  <div class="col-sm-10"><h4><%= form.text_field :UnitOfMeasure, class: "form-control" %></h4></div>
+  </div>
+
+  <div class="form-group row">
+  <div class="col-sm-2"><h4><%= form.label :Stock, "Stock", class: "col-form-label" %></h4></div><br />
+  <div class="col-sm-10"><h4><%= form.text_field :Stock, class: "form-control" %></h4></div>
+  </div>
+
+  <div class="form-group row">
+  <div class="col-sm-2"><h4><%= form.label :PackSize, "PackSize", class: "col-form-label" %></h4></div><br />
+  <div class="col-sm-10"><h4><%= form.text_field :PackSize, class: "form-control" %></h4></div>
+  </div>
+
+  <div class="form-group row">
+  <div class="col-sm-2"><h4><%= form.label :Cost, "Cost", class: "col-form-label" %></h4></div><br />
+  <div class="col-sm-10"><h4><%= form.text_field :Cost, class: "form-control" %></h4></div>
+  </div>
+
+  <div class="form-group row">
+  <div class="col-sm-2"><h4><%= form.label :RetailPrice, "RetailPrice", class: "col-form-label" %></h4></div><br />
+  <div class="col-sm-10"><h4><%= form.text_field :RetailPrice, class: "form-control" %></h4></div>
+  </div>
+
+  <div class="form-group row">
+  <div class="col-sm-2"><h4><%= form.label :Status, "Status", class: "col-form-label"%></h4></div><br />
+  <div class="col-sm-10"><h4><%= form.text_field :Status, class: "form-control" %></h4></div>
+  </div>
+
+  <div class="form-group row">
+    <%= form.submit 'Save master record', class: 'btn btn-success btn-block'%>
+  </div>
+<% end %>
+

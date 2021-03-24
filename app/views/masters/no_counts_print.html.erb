@@ -1,0 +1,249 @@
+<style>
+
+  *,
+  *:before,
+  *:after,
+  *:first-letter,
+  p:first-line,
+  div:first-line,
+  blockquote:first-line,
+  li:first-line {
+    background: transparent !important;
+    color: #000 !important; /* Black prints faster:
+                   http://www.sanbeiji.com/archives/953 */
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  a,
+  a:visited { text-decoration: underline; }
+
+  a[href]:after { content: " (" attr(href) ")"; }
+
+  abbr[title]:after { content: " (" attr(title) ")"; }
+
+  /*
+   * Don't show links that are fragment identifiers,
+   * or use the `javascript:` pseudo protocol
+   */
+
+  a[href^="#"]:after,
+  a[href^="javascript:"]:after { content: ""; }
+
+  pre { white-space: pre-wrap !important; }
+
+  pre,
+  blockquote {
+    border: 1px solid #999;
+    page-break-inside: avoid;
+  }
+
+  /*
+   * Printing Tables:
+   * http://css-discuss.incutio.com/wiki/Printing_Tables
+   */
+
+  thead { display: table-header-group; }
+  th { padding: 4px; text-align: center; font-size: 10px; text-align: left; }
+  table {width:100%;border-spacing:0}
+  td { padding: 4px; text-align: center; font-size: 10px; text-align: left; }
+  tr:last-child td{border-bottom:1px solid #000;}
+
+  tr,
+  img { page-break-inside: avoid; }
+
+  p,
+  h2,
+  h3 {
+    orphans: 3;
+    widows: 3;
+  }
+
+  h2,
+  h3 { page-break-after: avoid; }
+
+  /**
+   * HIDE certain elements completely
+   */
+  .site-navigation {
+    display: none;
+  }
+
+  /**
+   * Or go Nuclear and use this:
+   * from: https://medium.com/@matuzo/i-totally-forgot-about-print-style-sheets-f1e6604cfd6#.9de6r4yhr
+   *
+   *   body > *:not(main) { display: none; }
+   *
+   */
+
+   .left_header {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    font-size: 10px;
+   }
+
+   .custom_table {
+     position: relative;
+     margin-top: 10px;
+   }
+
+   .thrdbox {
+    text-align: right;
+    width: 100%;
+    position: absolute;
+    top: 10px;
+    font-size: 10px;
+    right: 10px;
+  }
+
+  .fourthbox {
+    text-align: right;
+    width: 100%;
+    position: absolute;
+    top: 60px;
+    font-size: 10px;
+    right: 10px;
+  }
+
+  .try {
+    margin-block-start: 10px;
+    margin-block-end: 10px;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+  }
+
+ .space {
+  padding-bottom: 0px;
+  padding-top: 0px;
+}
+  
+.quantity {
+  text-align: right;
+}
+
+.line {
+  text-align: center;
+  }
+
+  .lining {
+  border-top: 1px solid #000;
+  border-bottom: 1px solid #000;
+}
+
+</style>
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <%= favicon_link_tag 'favicon.ico' %>
+  </head>
+
+  <body style="margin-top: 0px;
+  margin-right: 0px;
+  margin-bottom: 0px;
+  margin-left: 0px;">
+
+<table>
+  <thead>
+  <tr>
+    <th colspan="2"><%= image_tag display_barcode(Master.first.CountName) %></th>
+    <th></th>
+    <th colspan="4" style="font-size: 17px; text-align:center">No Count Report</th>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th colspan="2" style="text-align: right;"><%= Time.now.strftime('%d/%m/%Y %H:%M:%S') %></th>
+  </tr>
+  <tr>
+    <th colspan="2">ใบนับเลขที่: <%= Master.first.CountName %></th>
+    <th></th>
+    <th colspan="4" style="font-size: 15px; text-align:center;">CRC Pooled Stocktake</th>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th colspan="2" style="text-align: right;"><%= params[:dept] %></th>
+  </tr>
+  <tr>
+    <th>StoreCode: <%= Master.first.StoreCode %></th>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+  <tr>
+    <th colspan="3">StoreName: <%= Master.first.StoreName %></th>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+    <tr>
+      <th class="lining" style="border-left:1px solid #000;">Department</th>
+      <th class="lining">SubDepartment</th>
+      <th class="lining">SKU</th>
+      <th class="lining">IBC</th>
+      <th class="lining">SBC</th>
+      <th class="lining">รายละเอียด</th>
+      <th class="lining">ยี่ห้อ</th>
+      <th class="lining">รุ่น</th>
+      <th class="lining">มูลค่า No Count</th>
+      <th class="lining" style="border-left:1px solid #000">Location#1 นับได้</th>
+      <th  class="lining" style="border-left:1px solid #000">Location#2 นับได้</th>
+      <th  class="lining" style="border-left:1px solid #000;border-right:1px solid #000;">Location#3 นับได้</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @no_counts.find_in_batches do |bulk| %>
+      <% bulk.each do |r| %>
+        <tr>
+          <td class="space" style="border-left:1px solid #000;"><%= r.DeptName %></td>
+          <td class="space"><%= r.SubDeptName %></td>
+          <td class="space"><%= r.SKU %></td>
+          <td class="space"><%= r.BarcodeIBC %></td>
+          <td class="space"><%= r.BarcodeSBC %></td>
+          <td class="space"><%= r.ProductName %></td>
+          <td class="space"><%= r.Brand %></td>
+          <td class="space"><%= r.Model %></td>
+          <td class="space"><%= number_with_delimiter((0-r.Stock.to_f * r.Cost.to_f).round(2).to_s.sub(/\.?0+$/, '')) %></td>
+          <td class="space" style="border-left:1px solid #000; text-align: center;"></td>
+          <td class="space" style="border-left:1px solid #000; text-align: center;"></td>
+          <td class="space" style="border-right:1px solid #000; border-left:1px solid #000; text-align: center;"></td>
+        </tr>
+
+        <tr>
+          <td class="space" colspan="2" style="border-left:1px solid #000;"></td>
+          <td class="space" colspan="2"></td>
+          <td class="space" colspan="2"><%= image_tag display_barcode(r.BarcodeSBC) %></td> 
+          <td class="space"></td>
+          <td class="space"></td>
+          <td class="space"></td>
+          <td class="space" style="border-left:1px solid #000; text-align: center;">.......................</td>
+          <td class="space" style="border-left:1px solid #000; text-align:center;">.......................</td>
+          <td class="space" style="border-right:1px solid #000; border-left:1px solid #000; text-align:center;">.......................</td>
+        </tr>
+    <% end %>
+    <% end %>
+  </tbody>
+</table>
+</body>
+</html>
+
+<script>
+  window.print();
+</script>
+

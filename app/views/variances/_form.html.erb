@@ -1,0 +1,32 @@
+<%= form_with(model: variance, local: true) do |form| %>
+  <% if variance.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(variance.errors.count, "error") %> prohibited this variance from being saved:</h2>
+
+      <ul>
+        <% variance.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group row">
+  <div class="col-sm-2"><h4><%= form.label :BARCODE, "BARCODE", class: "col-form-label" %></h4></div><br />
+  <div class="col-sm-10"><h4><%= form.text_field :BARCODE , class: "form-control"%></h4></div>
+  </div>
+
+  <div class="form-group row">
+  <div class="col-sm-2"><h4><%= form.label :LOCATION, "LOCATION", class: "col-form-label" %></h4> </div><br />
+  <div class="col-sm-10"><h4><%= form.text_field :LOCATION , class: "form-control"%></h4></div>
+  </div>
+
+  <div class="form-group row">
+  <div class="col-sm-2"><h4><%= form.label :QUANTITY, "QUANTITY", class: "col-form-label" %></h4> </div><br />
+  <div class="col-sm-10"><h4><%= form.text_field :QUANTITY, class: "form-control" %></h4></div>
+  </div>
+
+  <div class="form-group row">
+    <%= form.submit 'Save variance record', class: 'btn btn-success btn-block'%>
+  </div>
+<% end %>

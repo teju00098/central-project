@@ -1,0 +1,694 @@
+<style>
+body{
+  -webkit-print-color-adjust:exact !important;
+}
+  *,
+  *:before,
+  *:after,
+  *:first-letter,
+  p:first-line,
+  div:first-line,
+  blockquote:first-line,
+  li:first-line {
+    background: transparent !important;
+    color: #000 !important; /* Black prints faster:
+                   http://www.sanbeiji.com/archives/953 */
+    box-shadow: none !important;
+    text-shadow: none !important;
+    font-family: "Arial", sans-serif;
+  }
+  
+  a,
+  a:visited { text-decoration: underline; }
+  
+  a[href]:after { content: " (" attr(href) ")"; }
+  
+  abbr[title]:after { content: " (" attr(title) ")"; }
+  table, th, td, tr {
+    border-collapse: collapse;
+  }
+  
+  /*
+   * Don't show links that are fragment identifiers,
+   * or use the `javascript:` pseudo protocol
+   */
+  
+  a[href^="#"]:after,
+  a[href^="javascript:"]:after { content: ""; }
+  
+  pre { white-space: pre-wrap !important; }
+  
+  pre,
+  blockquote {
+    border: 1px solid #999;
+    page-break-inside: avoid;
+  }
+  
+  /*
+   * Printing Tables:
+   * http://css-discuss.incutio.com/wiki/Printing_Tables
+   */
+  
+  thead { display: table-header-group; }
+  th { padding: 4px; text-align: center; font-size: 10px; }
+  table {width:100%;border-spacing:0}
+  td { padding: 4px; text-align: center; font-size: 10px; }
+  
+  tr,
+  img { page-break-inside: avoid; }
+  
+  p,
+  h2,
+  h3 {
+    orphans: 3;
+    widows: 3;
+  }
+  
+  h2,
+  h3 { page-break-after: avoid; }
+  
+  /**
+   * HIDE certain elements completely
+   */
+  .site-navigation {
+    display: none;
+  }
+  
+  /**
+   * Or go Nuclear and use this:
+   * from: https://medium.com/@matuzo/i-totally-forgot-about-print-style-sheets-f1e6604cfd6#.9de6r4yhr
+   *
+   *   body > *:not(main) { display: none; }
+   *
+   */
+
+   .left_header {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    font-size: 10px;
+   }
+
+   .custom_table {
+     position: relative;
+     margin-top: 10px;
+   }
+
+   .thrdbox {
+    text-align: right;
+    width: 100%;
+    position: absolute;
+    top: 10px;
+    font-size: 10px;
+    right: 10px;
+  }
+
+  .fourthbox {
+    text-align: right;
+    width: 100%;
+    position: absolute;
+    top: 60px;
+    font-size: 10px;
+    right: 10px;
+  }
+
+  .try {
+    margin-block-start: 10px;
+    margin-block-end: 10px;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+  }
+
+ .space {
+  padding-bottom: 0px;
+  padding-top: 0px;
+}
+  
+.quantity {
+  text-align: right;
+}
+
+.line {
+  text-align: center;
+  }
+
+.lining {
+  border: 1px solid;
+}
+
+.aligning {
+  text-align: left;
+}
+
+.new {
+  text-align: left;
+  font-size: 13px;
+}
+
+</style>
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <%= favicon_link_tag 'favicon.ico' %>
+  </head>
+
+  <body style="margin-top: 0px;
+  margin-right: 0px;
+  margin-bottom: 0px;
+  margin-left: 0px;">
+
+<table>
+<thead>
+<tr>
+<th colspan="3" style="text-align:left;"><%= image_tag display_barcode(Master.first.CountName) %></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th style="text-align:center; font-size: 15px;" colspan="3">Summary Report</th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th style="text-align:right;" colspan="2"><%= Time.now.strftime('%d/%m/%Y %H:%M:%S') %></th>
+</tr>
+<tr>
+<th colspan="3" style="text-align:left;">ใบนับเลขที่: <%= Master.first.CountName %></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th style="text-align: center; font-size: 12px;" colspan="3">CRC Pooled Stocktake</th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th> 
+</tr>
+<tr>
+<th colspan="3" style="text-align:left;">StoreCode: <%= Master.first.StoreCode %></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+<tr>
+<th colspan="3" style="text-align:left;">StoreName: <%= Master.first.StoreName %></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+<tr style="background-color: lightgrey !important">
+  <th class="lining" rowspan="2">Department</th>
+  <th class="lining" colspan="4" style="text-align: center">SKU</th>
+  <th class="lining" colspan="5" style="text-align: center">Physical Count QNT</th>
+  <th class="lining" colspan="2" style="text-align: center">Physical Count Value</th>
+  <th class="lining" colspan="2" style="text-align: center">Gain Value</th>
+  <th class="lining" colspan="2" style="text-align: center">Loss Value</th>
+  <th class="lining" colspan="2" style="text-align: center">Gain-Loss Value</th>
+</tr>
+<tr>
+  <th class="lining" style="background-color: lightgrey !important">Count</th>
+  <th class="lining" style="background-color: lightgrey !important">NoDiff</th>
+  <th class="lining" style="background-color: lightgrey !important">DiffGain</th>
+  <th class="lining" style="background-color: lightgrey !important">DiffLoss</th>
+  <th class="lining" style="background-color: lightgrey !important">SOH</th>
+  <th class="lining" style="background-color: lightgrey !important">Physical</th>
+  <th class="lining" style="background-color: lightgrey !important">Over</th>
+  <th class="lining" style="background-color: lightgrey !important">Short</th>
+  <th class="lining" style="background-color: lightgrey !important">Variance</th>
+  <th class="lining" style="background-color: lightgrey !important">Retail</th>
+  <th class="lining" style="background-color: lightgrey !important">Cost </th>
+  <th class="lining" style="background-color: lightgrey !important">Retail </th>
+  <th class="lining" style="background-color: lightgrey !important"> Cost </th>
+  <th class="lining" style="background-color: lightgrey !important">Retail </th>
+  <th class="lining" style="background-color: lightgrey !important">Cost </th>
+  <th class="lining" style="background-color: lightgrey !important"> Retail </th>
+  <th class="lining" style="background-color: lightgrey !important">Cost </th>
+</tr>
+</thead>
+  <% @total_skucount = 0 %>
+  <% @total_sku_no_diff = 0 %>
+  <% @total_sku_diff_gain = 0 %>
+  <% @total_sku_diff_loss = 0 %>
+  <% @total_quantity_soh = 0 %>
+  <% @total_quantity_physical = 0 %>
+  <% @total_quantity_over = 0 %>
+  <% @total_quantity_short = 0 %>
+  <% @total_quantity_variance = 0 %>
+  <% @total_physical_count_retail_value = 0 %>
+  <% @total_physical_count_cost_value = 0 %>
+  <% @total_gain_cost_value = 0 %>
+  <% @total_gain_retail_value = 0 %>
+  <% @total_loss_cost_value = 0 %>
+  <% @total_loss_retail_value = 0 %>
+  <% @total_gain_loss_value_retail_value = 0 %>
+  <% @total_gain_loss_value_cost_value = 0 %>
+  <% @summary_reports.group_by{|r| r.DeptName}.each do |sub_sep_name, bulk| %>
+  
+    <% bulk.each do |r| %>
+      <tr>
+        <td class="lining" style="text-align:left"><%= r.credit %></td>
+        <td class="lining"><%= number_with_delimiter(r.skucount.to_f.round(3)) %></td>
+        <td class="lining"><%= number_with_delimiter(r.sku_no_diff.to_f.round(3)) %></td>
+        <td class="lining"><%= number_with_delimiter(r.sku_diff_gain.to_f.round(3)) %></td>
+        <td class="lining"><%= number_with_delimiter(r.sku_diff_loss.to_f.round(3)) %></td>
+        <td class="lining"><%= number_with_delimiter(r.quantity_soh.to_f.round(3)) %></td>
+        <td class="lining"><%= number_with_delimiter(r.quantity_physical.to_f.round(3)) %></td>
+        <td class="lining"><%= number_with_delimiter(r.quantity_over.to_f.round(3)) %></td>
+        <td class="lining"><%= number_with_delimiter(r.quantity_short.to_f.round(3)) %></td>
+        <td class="lining"><%= number_with_delimiter(r.quantity_variance.to_f.round(3)) %></td>
+        <td class="lining"><%= number_with_delimiter(r.physical_count_retail_value.to_f.round(3)) %></td>
+        <td class="lining"><%= number_with_delimiter(r.physical_count_cost_value.to_f.round(3)) %></td>
+        <td class="lining"><%= number_with_delimiter(r.gain_retail_value.to_f.round(3)) %></td>
+        <td class="lining"><%= number_with_delimiter(r.gain_cost_value.to_f.round(3)) %></td>
+        <td class="lining"><%= number_with_delimiter(r.loss_retail_value.to_f.round(3)) %></td>
+        <td class="lining"><%= number_with_delimiter(r.loss_cost_value.to_f.round(3)) %></td>
+        <td class="lining"><%= number_with_delimiter(r.gain_loss_value_retail_value.to_f.round(3)) %></td>
+        <td class="lining"><%= number_with_delimiter(r.gain_loss_value_cost_value.to_f.round(3)) %></td>
+      </tr>
+      <% @total_skucount += r.skucount.to_f %>
+      <% @total_sku_no_diff += r.sku_no_diff.to_f %>
+      <% @total_sku_diff_gain += r.sku_diff_gain.to_f %>
+      <% @total_sku_diff_loss += r.sku_diff_loss.to_f %>
+      <% @total_quantity_soh += r.quantity_soh.to_f %>
+      <% @total_quantity_physical += r.quantity_physical.to_f %>
+      <% @total_quantity_over += r.quantity_over.to_f %>
+      <% @total_quantity_short += r.quantity_short.to_f %>
+      <% @total_quantity_variance += r.quantity_variance.to_f %>
+      <% @total_physical_count_retail_value += r.physical_count_retail_value.to_f %>
+      <% @total_physical_count_cost_value += r.physical_count_cost_value.to_f %>
+      <% @total_gain_cost_value += r.gain_cost_value.to_f %>
+      <% @total_gain_retail_value += r.gain_retail_value.to_f %>
+      <% @total_loss_cost_value += r.loss_cost_value.to_f %>
+      <% @total_loss_retail_value += r.loss_retail_value.to_f %>
+      <% @total_gain_loss_value_retail_value += r.gain_loss_value_retail_value.to_f %>
+      <% @total_gain_loss_value_cost_value += r.gain_loss_value_cost_value.to_f %>
+    <% end %>
+
+    <tr style="background-color: #e6e6e6 !important">
+      <td class="lining aligning">Total: <%= sub_sep_name %></td>
+      <td class="lining"><%= number_with_delimiter(bulk.map(&:skucount).map(&:to_f).sum.round(3)) %></td>
+      <td class="lining"><%= number_with_delimiter(bulk.map(&:sku_no_diff).map(&:to_f).sum.round(3)) %></td>
+      <td class="lining"><%= number_with_delimiter(bulk.map(&:sku_diff_gain).map(&:to_f).sum.round(3)) %></td>
+      <td class="lining"><%= number_with_delimiter(bulk.map(&:sku_diff_loss).map(&:to_f).sum.round(3)) %></td>
+      <td class="lining"><%= number_with_delimiter(bulk.map(&:quantity_soh).map(&:to_f).sum.round(3)) %></td>
+      <td class="lining"><%= number_with_delimiter(bulk.map(&:quantity_physical).map(&:to_f).sum.round(3)) %></td>
+      <td class="lining"><%= number_with_delimiter(bulk.map(&:quantity_over).map(&:to_f).sum.round(3)) %></td>
+      <td class="lining"><%= number_with_delimiter(bulk.map(&:quantity_short).map(&:to_f).sum.round(3)) %></td>
+      <td class="lining"><%= number_with_delimiter(bulk.map(&:quantity_variance).map(&:to_f).sum.round(3)) %></td>
+      <td class="lining"><%= number_with_delimiter(bulk.map(&:physical_count_retail_value).map(&:to_f).sum.round(3)) %></td>
+      <td class="lining"><%= number_with_delimiter(bulk.map(&:physical_count_cost_value).map(&:to_f).sum.round(3)) %></td>
+      <td class="lining"><%= number_with_delimiter(bulk.map(&:gain_cost_value).map(&:to_f).sum.round(3)) %></td>
+      <td class="lining"><%= number_with_delimiter(bulk.map(&:gain_retail_value).map(&:to_f).sum.round(3)) %></td>
+      <td class="lining"><%= number_with_delimiter(bulk.map(&:loss_cost_value).map(&:to_f).sum.round(3)) %></td>
+      <td class="lining"><%= number_with_delimiter(bulk.map(&:loss_retail_value).map(&:to_f).sum.round(3)) %></td>
+      <td class="lining"><%= number_with_delimiter(bulk.map(&:gain_loss_value_retail_value).map(&:to_f).sum.round(3)) %></td>
+      <td class="lining"><%= number_with_delimiter(bulk.map(&:gain_loss_value_cost_value).map(&:to_f).sum.round(3)) %></td>
+    </tr>
+  <% end %>
+  <tr>
+  </tr>
+  <tr style="background-color: lightgrey !important">
+    <th class="lining aligning"><b>Total for Branch</b></th>
+    <td class="lining"><b><%= number_with_delimiter(@total_skucount.round(3)) %></b></td>
+    <td class="lining"><b><%= number_with_delimiter(@total_sku_no_diff.round(3)) %></b></td>
+    <td class="lining"><b><%= number_with_delimiter(@total_sku_diff_gain.round(3)) %></b></td>
+    <td class="lining"><b><%= number_with_delimiter(@total_sku_diff_loss.round(3)) %></b></td>
+    <td class="lining"><b><%= number_with_delimiter(@total_quantity_soh.round(3)) %></b></td>
+    <td class="lining"><b><%= number_with_delimiter(@total_quantity_physical.round(3)) %></b></td>
+    <td class="lining"><b><%= number_with_delimiter(@total_quantity_over.round(3)) %></b></td>
+    <td class="lining"><b><%= number_with_delimiter(@total_quantity_short.round(3)) %></b></td>
+    <td class="lining"><b><%= number_with_delimiter(@total_quantity_variance.round(3)) %></b></td>
+    <td class="lining"><b><%= number_with_delimiter(@total_physical_count_retail_value.round(3)) %></b></td>
+    <td class="lining"><b><%= number_with_delimiter(@total_physical_count_cost_value.round(3)) %></b></td>
+    <td class="lining"><b><%= number_with_delimiter(@total_gain_cost_value.round(3)) %></b></td>
+    <td class="lining"><b><%= number_with_delimiter(@total_gain_retail_value.round(3)) %></b></td>
+    <td class="lining"><b><%= number_with_delimiter(@total_loss_cost_value.round(3)) %></b></td>
+    <td class="lining"><b><%= number_with_delimiter(@total_loss_retail_value.round(3)) %></b></td>
+    <td class="lining"><b><%= number_with_delimiter(@total_gain_loss_value_retail_value.round(3)) %></b></td>
+    <td class="lining"><b><%= number_with_delimiter(@total_gain_loss_value_cost_value.round(3)) %></b></td>
+  </tr>
+</table>
+<table>
+  <td style="font-size: 14px;" class="new" colspan="30"><b>ทางฝ่าย CRC Pooled Stocktake ตกลงปรับสต๊อก ตามผลการตรวจนับ โดยมีมูลค่า ขาด - เกิน บัญชี ดังนี้</b></td>
+<tr>
+  <td class="new">มูลค่าเกินบัญชีราคาทุน  (Total STOCK Gain)</td>
+  <td class="new"><%= number_with_delimiter(@total_gain_retail_value.round(3)) %></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+</tr>
+<tr>
+  <td class="new">มูลค่าขาดบัญชีราคาทุน  (Total STOCK Loss)</td>
+  <td class="new"><%= number_with_delimiter(@total_loss_retail_value.round(3)) %></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+</tr>
+<tr>
+  <td class="new">มูลค่าขาด - เกินบัญชีราคาทุน  (Net)</td>
+  <td class="new"><%= number_with_delimiter(@total_gain_loss_value_cost_value.round(3)) %></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+</tr>
+<tr>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+</tr>
+<tr>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+</tr>
+<tr>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+</tr>
+</table>
+<table>
+<tr>
+<th>ลงชื่อ.................................... ผู้อนุมัติ</th>
+<th>ลงชื่อ.................................... ผู้อนุมัติ</th>
+<th>ลงชื่อ.................................... ผู้อนุมัติ</th>
+<th>ลงชื่อ.................................... ผู้อนุมัติ</th>
+</tr>
+<tr>
+<th>(....................................)</th>
+<th>(....................................)</th>
+<th>(....................................)</th>
+<th>(....................................)</th>
+</tr>
+<tr>
+<th>Division Sale 1</th>
+<th>Division Sale 2</th>
+<th>Store Manager</th>
+<th>DM Loss Prevention</th>
+</tr>
+<tr>
+<th>วันที่ ............./................./...............</th>
+<th>วันที่ ............./................./...............</th>
+<th>วันที่ ............./................./...............</th>
+<th>วันที่ ............./................./...............</th>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<th>ลงชื่อ.................................... ผู้อนุมัติ</th>
+<th>ลงชื่อ.................................... ผู้อนุมัติ</th>
+<th>ลงชื่อ.................................... ผู้อนุมัติ</th>
+<th>ลงชื่อ.................................... ผู้อนุมัติ</th>
+</tr>
+<tr>
+<th>(....................................)</th>
+<th>(....................................)</th>
+<th>(....................................)</th>
+<th>(....................................)</th>
+</tr>
+<tr>
+<th>District Operation</th>
+<th>VP Operation</th>
+<th>SVP Operation</th>
+<th>GM Stock Count Control</th>
+</tr>
+<tr>
+<th>วันที่ ............./................./...............</th>
+<th>วันที่ ............./................./...............</th>
+<th>วันที่ ............./................./...............</th>
+<th>วันที่ ............./................./...............</th>
+</tr>
+</table>
+
+</body>
+</html>
+<script>
+  window.print();
+</script>
+

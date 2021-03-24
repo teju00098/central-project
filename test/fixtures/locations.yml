@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  location: MyString
+  zone: MyString
+  type: 
+  dept: MyString
+  subdept: MyString
+
+two:
+  location: MyString
+  zone: MyString
+  type: 
+  dept: MyString
+  subdept: MyString

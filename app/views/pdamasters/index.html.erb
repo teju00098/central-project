@@ -1,0 +1,108 @@
+<h2>Import PDAMaster Data </h2>
+<div class="media">
+<div class="media-body">
+<%= link_to 'IMPORT PDA MASTER DATA', prepare_import_pdamasters_path, remote: true, class: 'btn btn-mini btn-warning' %> | 
+<%= link_to "CLEAR PDA MASTER DATA", cleardata_pdamasters_path, :method => :delete, class: 'btn btn-mini btn-danger' %> |
+<%= link_to 'ADD NEW RECORD', new_pdamaster_path, class: 'btn btn-mini btn-success' %>
+
+<div id="import-form"></div>
+
+<h3> <%= @masters.count %> records imported successfully</h3>
+
+<%= form_tag(search_pdamasters_path, :method => "get",   
+    class: 'navbar-form navbar-left') do %>  
+  <div class="input-group">  
+    <%= search_field_tag :search, params[:search], placeholder: "Search", class: "form-control" %>  
+    <div class="input-group-btn">  
+      <%= button_tag "", :class => 'btn btn-info glyphicon glyphicon-search',:name => nil%>  
+    </div>  
+  </div>  
+<% end %> 
+</div>  
+</div>  
+<h1>PDAMaster Data</h1>
+
+<div class="table-wrapper">
+<table class="table table-striped table-hover">
+  <thead>
+    <tr>
+      <th>CountName</th>
+      <th>StoreCode</th>
+      <th>StoreName</th>
+      <th>VenderCode</th>
+      <th>VenderName</th>
+      <th>DeptCode</th>
+      <th>DeptName</th>
+      <th>SubDeptCode</th>
+      <th>SubDeptName</th>
+      <th>Class</th>
+      <th>ClassName</th>
+      <th>SubClass</th>
+      <th>SubClassName</th>
+      <th>SKUType</th>
+      <th>SpecialAttribute</th>
+      <th>SKU</th>
+      <th>BarcodeIBC</th>
+      <th>BarcodeSBC</th>
+      <th>ProductName</th>
+      <th>Brand</th>
+      <th>Model</th>
+      <th>UnitOfMeasure</th>
+      <th>Stock</th>
+      <th>Pack Size</th>
+      <th>Cost</th>
+      <th>Retail price</th>
+      <th>Status</th>
+      <th>CountStatus</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @masters.each do |master| %>
+      <tr>
+        <td><%= master.CountName %></td>
+        <td><%= master.StoreCode %></td>
+        <td><%= master.StoreName %></td>
+        <td><%= master.VenderCode %></td>
+        <td><%= master.VenderName %></td>
+        <td><%= master.DeptCode %></td>
+        <td><%= master.DeptName %></td>
+        <td><%= master.SubDeptCode %></td>
+        <td><%= master.SubDeptName %></td>
+        <td><%= master.Class %></td>
+        <td><%= master.ClassName %></td>
+        <td><%= master.SubClass %></td>
+        <td><%= master.SubClassName %></td>
+        <td><%= master.SKUType %></td>
+        <td><%= master.SpecialAttribute %></td>
+        <td><%= master.SKU %></td>
+        <td><%= master.BarcodeIBC %></td>
+        <td><%= master.BarcodeSBC %></td>
+        <td><%= master.ProductName %></td>
+        <td><%= master.Brand %></td>
+        <td><%= master.Model %></td>
+        <td><%= master.UnitOfMeasure %></td>
+        <td><%= master.Stock %></td>
+        <td><%= master.PackSize %></td>
+        <td><%= master.Cost %></td>
+        <td><%= master.RetailPrice %></td>
+        <td><%= master.Status %></td>
+        <td><%= master.HasCount ? 'Count' : 'No Count' %></td>
+        <td><%= link_to 'Show', master, class: 'btn btn-mini btn-info' %></td>
+        <td><%= link_to 'Edit', edit_pdamaster_path(master), class: 'btn btn-mini btn-success' %></td>
+        <td><%= link_to 'Destroy', master, method: :delete, class: 'btn btn-mini btn-danger', data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+</div>
+
+
+<br>
+
+<%= will_paginate @masters, renderer: BootstrapPagination::Rails  %>
+
+
+
+
